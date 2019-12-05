@@ -17,6 +17,8 @@ void Menu::Init(Platform* platform, GameStateManager* manager)
 	std::cout << " Menu Init" << std::endl;
 	this->platform = platform;
 	this->manager = manager;
+
+	text = new Text("../Assets/Fonts/arial.ttf", 25, "Ya tengo texto en mi jueguitow", { 255, 0, 0, 255 });
 	/*background = new Image();
 	background->LoadImage("../Assets/Images/background.png");*/
 
@@ -61,7 +63,7 @@ void Menu::Draw()
 {
 	platform->RenderClear();
 	std::cout << " Menu Draw" << std::endl;
-
+	text->Display(0, 0);
 	/*test->SetGifVel(3);
 	test->SetLoop(false);
 	test->Update();
@@ -78,24 +80,31 @@ void Menu::Draw()
 	platform->RenderPresent();
 }
 
-bool Menu::Input(std::vector<int>* keyUps, std::vector<int>* keyDowns)
+bool Menu::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps)
 {
 	std::cout << " Menu Input" << std::endl;
 
-	for (auto num : keyUps[0])
+	if (!(keyUps->size == 0))
 	{
-
+		for (int i = 0; i < keyUps->size; i++)
+		{
+			int num = keyUps->get_at(i)->value;
+			if (num == 27)
+			{
+				exit(1);
+			}
+			else
+			{
+				manager->SetState(new Game());
+			}
+		}
 	}
 
-	for (auto num : keyDowns[0])
+	if (!(keyDowns->size == 0))
 	{
-		if (num == 27)
+		for (int i = 0; i < keyDowns->size; i++)
 		{
-			exit(1);
-		}
-		else
-		{
-			manager->SetState(new Game());
+			int num = keyDowns->get_at(i)->value;
 		}
 	}
 

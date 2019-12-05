@@ -6,12 +6,10 @@ Game::Game()
 
 }
 
-
 Game::~Game()
 {
 
 }
-
 
 void Game::Init(Platform* platform, GameStateManager* manager)
 {
@@ -60,24 +58,26 @@ void Game::Draw()
 	platform->RenderPresent();
 }
 
-bool Game::Input(std::vector<int>* keyUps, std::vector<int>* keyDowns)
+bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps)
 {
-	/*if (keyInput == 27)
+	if (!(keyUps->size == 0))
 	{
-
-	}*/
-
-	for (auto num : keyUps[0])
-	{
-		if (num == 27)
+		for (int i = 0; i < keyUps->size; i++)
 		{
-			exit(1);
+			int num = keyUps->get_at(i)->value;
+			if (num == 27)
+			{
+				exit(1);
+			}
 		}
 	}
 
-	for (auto num : keyDowns[0])
+	if (!(keyDowns->size == 0))
 	{
-
+		for (int i = 0; i < keyDowns->size; i++)
+		{
+			int num = keyDowns->get_at(i)->value;
+		}
 	}
 
 	//player->Input(keyUps, keyDowns);

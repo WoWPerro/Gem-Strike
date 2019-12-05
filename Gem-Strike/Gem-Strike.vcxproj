@@ -159,8 +159,11 @@
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Gem-Strike.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ListaT.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="NodoT.cpp" />
     <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="StackT.cpp" />
     <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,8 +171,11 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ListaT.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="NodoT.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="StackT.h" />
     <ClInclude Include="Text.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

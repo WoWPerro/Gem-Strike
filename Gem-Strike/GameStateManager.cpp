@@ -18,7 +18,7 @@ void GameStateManager::GameLoop()
 		{
 			if (states.size() == 0)
 				throw std::exception("Error");
-			auto state = states.top();
+			auto state = states.top()->value;
 			platform->CheckEvent(state, &GameState::Input);
 			state->Update();
 			state->Draw();
@@ -35,12 +35,12 @@ void GameStateManager::GameLoop()
 void GameStateManager::SetState(GameState* state)
 {
 	state->Init(platform, this);
-	states.push(state);
+	states.push_front(state);
 }
 
 void GameStateManager::RealaseState()
 {
-	auto state = states.top();
+	auto state = states.top()->value;
 	state->Close();
 	states.pop();
 }

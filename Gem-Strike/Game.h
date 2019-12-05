@@ -1,6 +1,5 @@
 #pragma once
 #include "GameState.h"
-#include <list>
 
 class Game : public GameState
 {
@@ -23,7 +22,7 @@ public:
 	~Game();
 	void Init(Platform* platform, GameStateManager* manager) override;
 	void Draw() override;
-	bool Input(std::vector<int>* keyDowns, std::vector<int>* keyUps) override;
+	bool Input(ListaT<int>* keyDowns, ListaT<int>* keyUps) override;
 	void Update() override;
 	void Close() override;
 };

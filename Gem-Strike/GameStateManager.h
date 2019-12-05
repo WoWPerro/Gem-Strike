@@ -1,14 +1,14 @@
 #pragma once
 #include "GameState.h"
 #include "Platform.h"
-#include <stack>
+#include "StackT.h"
 
 class GameState;
 
 class GameStateManager
 {
 private:
-	std::stack<GameState*> states;
+	StackT<GameState*> states;
 	Platform* platform;
 public:
 	GameStateManager();

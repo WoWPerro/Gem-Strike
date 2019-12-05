@@ -1,9 +1,8 @@
 #include "Platform.h"
 #include "SDL.h"
-#include<iostream>
+#include <iostream>
 #include "GameState.h"
-#include <vector>
-
+#include "ListaT.h"
 
 SDL_Renderer* Platform::renderer;
 
@@ -20,8 +19,7 @@ Platform::Platform(std::string name)
 		return;
 	}
 
-	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 	if (window == nullptr)
 	{
 		std::cout << "CreateWindow";
@@ -83,19 +81,20 @@ Platform::~Platform()
 {
 }
 
-std::vector<SDL_Event>& Platform::GetFrameEvents()
+ListaT<SDL_Event>& Platform::GetFrameEvents()
 {
-	static std::vector<SDL_Event> frame_events;
+	//static std::vector<SDL_Event> frame_events;
+	static ListaT<SDL_Event> frame_events;
 	return frame_events;
 }
 
-void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(std::vector<int>*, std::vector<int>*))
+void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps))
 {
 	SDL_Event e;
-	std::vector<int> keysDown;
-	std::vector<int> keysUp;
+	ListaT<int> keysDown;
+	ListaT<int> keysUp;
 
-	while (SDL_PollEvent(&e)) //El & sirve para obtener la dirección de memoria
+	while (SDL_PollEvent(&e))
 	{
 		switch (e.type)
 		{

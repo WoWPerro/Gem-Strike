@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "Image.h"
 #include "GameState.h"
-#include <vector>
+#include "ListaT.h"
 
 class GameState;
 
@@ -21,8 +21,9 @@ public:
 	void RenderImage(Image* image, int x, int y, float angle);
 	void RenderPresent();
 
-	std::vector <SDL_Event>& GetFrameEvents();
-	void CheckEvent(GameState* obj, bool (GameState::* f)(std::vector<int>*, std::vector<int>*));
+	//std::vector <SDL_Event>& GetFrameEvents();
+	ListaT<SDL_Event>& GetFrameEvents();
+	void CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps));
 
 	void DrawRect(int x, int y, int w, int h);
 private:
