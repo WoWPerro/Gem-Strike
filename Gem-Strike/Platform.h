@@ -10,10 +10,11 @@ class GameState;
 class Platform
 {
 private:
+	SDL_Window* window;
+
+public:
 	int width;
 	int height;
-	SDL_Window* window;
-public:
 	static SDL_Renderer* renderer;
 	Platform(std::string name);
 	~Platform();

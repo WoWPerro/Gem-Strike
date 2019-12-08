@@ -1,6 +1,5 @@
 #pragma once
 #include "Platform.h"
-//#include <vector>
 #include "ListaT.h"
 
 class Platform;

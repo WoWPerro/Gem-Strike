@@ -1,5 +1,6 @@
 #include "Game.h"
 #include<iostream>
+#include "Gem.h"
 
 Game::Game()
 {
@@ -13,6 +14,15 @@ Game::~Game()
 
 void Game::Init(Platform* platform, GameStateManager* manager)
 {
+	std::cout << " Game Init" << std::endl;
+	this->platform = platform;
+	this->manager = manager;
+
+	tile1 = new Image();
+	tile1->LoadImage("../Assets/Images/Tile.png");
+	tile2 = new Image();
+	tile2->LoadImage("../Assets/Images/Tile2.png");
+	gem1 = new Gem(6);
 	/*player = new Tank();
 	player->Init(platform);
 	player->SetPool(&bulletPool, &tilePool, &tankPosX, &tankPosY);
@@ -39,6 +49,9 @@ void Game::Draw()
 {
 	std::cout << " Game Draw" << std::endl;
 	platform->RenderClear();
+	DrawTiles();
+	gem1->Draw();
+	platform->RenderImage(gem1->_actualImage, 0, 0, 0);
 	/*player->Draw();
 	enemy->Draw();*/
 
@@ -109,4 +122,29 @@ void Game::Update()
 void Game::Close()
 {
 	std::cout << " Close Init" << std::endl;
+}
+
+void Game::DrawTiles()
+{
+	int w = tile1->GetWidth();
+	int h = tile1->GetHeight();
+	bool switch1 = false;
+	for (int i = 0; i <= 7; i++)
+	{
+		for (int j = 0; j <= 7; j++)
+		{
+			if (switch1)
+			{
+				platform->RenderImage(tile1, ((platform->width /2) - 4*w) + (i*w), ((platform->height / 2) - 4*h) + (j * h), 0);
+				switch1 = !switch1;
+			}
+
+			else
+			{
+				platform->RenderImage(tile2, ((platform->width /2) - 4*w) + (i * w), ((platform->height / 2) - 4*h) + (j * h), 0);
+				switch1 = !switch1;
+			}
+		}
+		switch1 = !switch1;
+	}
 }

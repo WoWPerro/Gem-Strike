@@ -8,10 +8,10 @@ SDL_Renderer* Platform::renderer;
 
 Platform::Platform(std::string name)
 {
-	/*width = 1920;
-	height = 1080;*/
-	width = 720;
-	height = 480;
+	width = 1920;
+	height = 1080;
+	/*width = 720;
+	height = 480;*/
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
@@ -20,6 +20,7 @@ Platform::Platform(std::string name)
 	}
 
 	window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+	//window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_FULLSCREEN);
 	if (window == nullptr)
 	{
 		std::cout << "CreateWindow";
@@ -127,7 +128,6 @@ void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* key
 			{
 				keysDown.push_back(SDLK_s);
 			}
-
 			break;
 
 

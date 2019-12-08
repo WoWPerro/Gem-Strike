@@ -12,6 +12,9 @@ private:
 	Image* background;
 	GameStateManager* manager;
 	Text* text;
+	Image* tile1;
+	Image* tile2;
+	void drawTiles();
 	//Gif* test;
 	//Gif* test2;
 public:

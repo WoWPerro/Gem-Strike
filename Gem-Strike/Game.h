@@ -1,10 +1,16 @@
 #pragma once
 #include "GameState.h"
+#include "Gem.h"
 
 class Game : public GameState
 {
 private:
 	Platform* platform;
+	GameStateManager* manager;
+	Image* tile1;
+	Image* tile2;
+	Gem* gem1;
+	void DrawTiles();
 	/*Tank* player;
 	HeavyTank* enemy;
 	Bullet* bullet;

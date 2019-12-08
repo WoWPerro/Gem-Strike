@@ -4,11 +4,12 @@
 #include "GameState.h"
 #include "GameStateManager.h"
 #include "Menu.h"
+#include "Game.h"
 
 int main(int argc, char* argv[])
 {
 	GameStateManager* manager = new GameStateManager();
-	manager->SetState(new Menu());
+	manager->SetState(new Game());
 	manager->GameLoop();
 	delete manager;
 	return 0;

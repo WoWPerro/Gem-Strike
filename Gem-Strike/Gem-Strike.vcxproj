@@ -155,12 +155,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="Gem-Strike.cpp" />
+    <ClCompile Include="Gem.cpp" />
+    <ClCompile Include="Gif.cpp" />
+    <ClCompile Include="Grafo.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ListaS.cpp" />
     <ClCompile Include="ListaT.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="NodoG.cpp" />
     <ClCompile Include="NodoT.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="StackT.cpp" />
@@ -168,11 +175,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="Gem.h" />
+    <ClInclude Include="Gif.h" />
+    <ClInclude Include="Grafo.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ListaS.h" />
     <ClInclude Include="ListaT.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="NodoG.h" />
     <ClInclude Include="NodoT.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="StackT.h" />

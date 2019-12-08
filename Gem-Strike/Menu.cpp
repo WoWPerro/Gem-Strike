@@ -18,7 +18,11 @@ void Menu::Init(Platform* platform, GameStateManager* manager)
 	this->platform = platform;
 	this->manager = manager;
 
-	text = new Text("../Assets/Fonts/arial.ttf", 25, "Ya tengo texto en mi jueguitow", { 255, 0, 0, 255 });
+	text = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, "Ya tengo texto en mi jueguitow", { 255, 0, 0, 255 });
+	tile1 = new Image();
+	tile1->LoadImage("../Assets/Images/Tile.png");
+	tile2 = new Image();
+	tile2->LoadImage("../Assets/Images/Tile2.png");
 	/*background = new Image();
 	background->LoadImage("../Assets/Images/background.png");*/
 
@@ -63,6 +67,7 @@ void Menu::Draw()
 {
 	platform->RenderClear();
 	std::cout << " Menu Draw" << std::endl;
+	drawTiles();
 	text->Display(0, 0);
 	/*test->SetGifVel(3);
 	test->SetLoop(false);
@@ -119,4 +124,28 @@ void Menu::Update()
 void Menu::Close()
 {
 	std::cout << " Close Init" << std::endl;
+}
+
+void Menu::drawTiles()
+{
+	int w = tile1->GetWidth();
+	int h = tile1->GetHeight();
+	bool switch1 = false;
+	for (int i = 0; i <= platform->height; i++)
+	{
+		for (int j = 0; j <= platform->width; j++)
+		{
+			if (switch1)
+			{
+				platform->RenderImage(tile1, w * j, h * i, 0);
+				switch1 = !switch1;
+			}
+
+			else
+			{
+				platform->RenderImage(tile2, w * j, h * i, 0);
+				switch1 = !switch1;
+			}
+		}
+	}
 }
