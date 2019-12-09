@@ -268,12 +268,14 @@ void Gem::LoadGifs(int type)
 	}
 }
 
-Gem::Gem(int type)
+Gem::Gem(int type, int _x, int _y)
 {
 	_type = type;
 	_Destruction = new Gif(false);
 	_Idle = new Gif(true);
 	LoadGifs(_type);
+	x = _x;
+	y = _y;
 }
 
 Gem::~Gem()
@@ -285,11 +287,11 @@ void Gem::Draw()
 {
 	if (state == Destroying)
 	{
-		*_actualImage = (_Destruction->currentFrame);
+		_actualImage = &(_Destruction->currentFrame);
 	}
 	else if (state == Idling)
 	{
-		*_actualImage = (_Idle->currentFrame);
+		_actualImage = &(_Idle->currentFrame);
 	}
 	else if (state == Normal)
 	{

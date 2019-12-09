@@ -23,7 +23,7 @@ void Gif::update()
 	if (SDL_TICKS_PASSED(SDL_GetTicks(), _lastFrameTime))
 	{
 		_lastFrameTime = SDL_GetTicks() + _vel;
-		if (index >= ImageList.size)
+		if (index == ImageList.size - 1)
 		{
 			if (_loop)
 			{

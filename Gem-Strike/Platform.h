@@ -15,6 +15,8 @@ private:
 public:
 	int width;
 	int height;
+	float lastmouseX;
+	float lastmouseY;
 	static SDL_Renderer* renderer;
 	Platform(std::string name);
 	~Platform();
@@ -24,7 +26,7 @@ public:
 
 	//std::vector <SDL_Event>& GetFrameEvents();
 	ListaT<SDL_Event>& GetFrameEvents();
-	void CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps));
+	void CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, float* mouseX, float* mouseY));
 
 	void DrawRect(int x, int y, int w, int h);
 private:

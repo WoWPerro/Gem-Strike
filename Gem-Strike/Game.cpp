@@ -22,7 +22,7 @@ void Game::Init(Platform* platform, GameStateManager* manager)
 	tile1->LoadImage("../Assets/Images/Tile.png");
 	tile2 = new Image();
 	tile2->LoadImage("../Assets/Images/Tile2.png");
-	gem1 = new Gem(6);
+	gem1 = new Gem(6, 0,0);
 	/*player = new Tank();
 	player->Init(platform);
 	player->SetPool(&bulletPool, &tilePool, &tankPosX, &tankPosY);
@@ -71,7 +71,7 @@ void Game::Draw()
 	platform->RenderPresent();
 }
 
-bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps)
+bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, float* mouseX, float* mouseY)
 {
 	if (!(keyUps->size == 0))
 	{

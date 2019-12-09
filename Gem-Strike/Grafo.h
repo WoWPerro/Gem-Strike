@@ -18,6 +18,7 @@ public:
 	void printsons(NodoG<T>* padre, bool allvisited);
 	void Deletefromlist(T val, NodoG<T>* head);
 	NodoG<T>* searchSons(T data, NodoG<T>* padre);
+	NodoG<T>* GetNodo(int x, int y);
 	Grafo();
 	~Grafo();
 };
@@ -62,6 +63,27 @@ void Grafo<T>::insertaNodo(T data, NodoG<T>* padre)
 	{
 		std::cout << "Exception caught: " << e.what() << std::endl;
 	}
+
+	/*void Graph::insertNodes(int x, int y)
+	{
+		Vector<Vector<NodoG*>*> nodes;
+		for (int i = 0; i < x; i++)
+		{
+			nodes.PushBack(new Vector<NodoG*>(y));
+		}
+		for (int i = 0; i < x; i++)
+		{
+			for (int j = 0; j < y; j++)
+			{
+				nodes.GetAt(i)->PushAt(j, new NodoG(Vec2(i, j)));
+				if (i > 0)		connectNodes(nodes.GetAt(i - 1)->GetAt(j), nodes.GetAt(i)->GetAt(j));
+				if (i < x - 1)	connectNodes(nodes.GetAt(i + 1)->GetAt(j), nodes.GetAt(i)->GetAt(j));
+				if (j > 0)		connectNodes(nodes.GetAt(i)->GetAt(j - 1), nodes.GetAt(i)->GetAt(j));
+				if (j < y - 1)	connectNodes(nodes.GetAt(i)->GetAt(j + 1), nodes.GetAt(i)->GetAt(j));
+			}
+		}
+		root = nodes.GetAt(0)->GetAt(0);
+	}*/
 }
 
 /**
@@ -301,5 +323,15 @@ void Grafo<T>::printsons(NodoG<T>* padre, bool allvisited)
 	catch (std::exception & e)
 	{
 		std::cout << "Exception caught: " << e.what() << std::endl;
+	}
+}
+
+template <class T>
+NodoG<T>* Grafo<T>::GetNodo(int x, int y)
+{
+	NodoG<T>* it = first;
+	for (int i = 0; i < x; i++)
+	{
+		it = it->l.first;
 	}
 }

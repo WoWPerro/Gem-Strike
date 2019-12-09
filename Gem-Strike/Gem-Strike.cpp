@@ -9,7 +9,7 @@
 int main(int argc, char* argv[])
 {
 	GameStateManager* manager = new GameStateManager();
-	manager->SetState(new Game());
+	manager->SetState(new Menu());
 	manager->GameLoop();
 	delete manager;
 	return 0;

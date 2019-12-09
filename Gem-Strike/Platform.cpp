@@ -89,11 +89,14 @@ ListaT<SDL_Event>& Platform::GetFrameEvents()
 	return frame_events;
 }
 
-void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps))
+void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool *leftclick, float *mouseX, float *mouseY))
 {
 	SDL_Event e;
 	ListaT<int> keysDown;
 	ListaT<int> keysUp;
+	bool _leftclick = false;
+	float _mouseX = lastmouseX;
+	float _mouseY = lastmouseY;
 
 	while (SDL_PollEvent(&e))
 	{
@@ -161,8 +164,36 @@ void Platform::CheckEvent(GameState* obj, bool (GameState::* f)(ListaT<int>* key
 				keysUp.push_back(SDLK_s);
 			}
 			break;
+
+		case SDL_MOUSEMOTION:
+			_mouseX = e.motion.x;
+			lastmouseX = _mouseX;
+			_mouseY = e.motion.y;
+			lastmouseY = _mouseY;
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+		{
+			SDL_MouseButtonEvent& b = e.button;
+			if (b.button == SDL_BUTTON_LEFT)
+			{
+				_leftclick = true;
+			}
+		}
+			
+			break;
+		case SDL_MOUSEBUTTONUP:
+		{
+			SDL_MouseButtonEvent& B = e.button;
+			if (B.button == SDL_BUTTON_LEFT)
+			{
+				_leftclick = false;
+			}
+		}
+			
+			break;
 		}
 	}
 
-	(obj->*f)(&keysDown, &keysUp);
+	(obj->*f)(&keysDown, &keysUp, &_leftclick, &_mouseX, &_mouseY);
 }

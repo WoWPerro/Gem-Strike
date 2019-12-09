@@ -23,69 +23,135 @@ void Menu::Init(Platform* platform, GameStateManager* manager)
 	tile1->LoadImage("../Assets/Images/Tile.png");
 	tile2 = new Image();
 	tile2->LoadImage("../Assets/Images/Tile2.png");
-	/*background = new Image();
-	background->LoadImage("../Assets/Images/background.png");*/
-
-	/*test = new Gif();
-	test->Init(platform);
-	test->SetPositionX(0);
-	test->SetPositionY(0);
-	test->AddImage("../Assets/Images/sprite_00.png");
-	test->AddImage("../Assets/Images/sprite_01.png");
-	test->AddImage("../Assets/Images/sprite_02.png");
-	test->AddImage("../Assets/Images/sprite_03.png");
-	test->AddImage("../Assets/Images/sprite_04.png");
-	test->AddImage("../Assets/Images/sprite_05.png");
-	test->AddImage("../Assets/Images/sprite_06.png");
-	test->AddImage("../Assets/Images/sprite_07.png");
-	test->AddImage("../Assets/Images/sprite_08.png");
-	test->AddImage("../Assets/Images/sprite_09.png");
-	test->AddImage("../Assets/Images/sprite_10.png");
-	test->AddImage("../Assets/Images/sprite_11.png");
-	test->AddImage("../Assets/Images/sprite_12.png");
-	test->AddImage("../Assets/Images/sprite_13.png");
-	test->AddImage("../Assets/Images/sprite_14.png");
-	test->AddImage("../Assets/Images/sprite_15.png");
-	test->AddImage("../Assets/Images/sprite_16.png");
-	test->AddImage("../Assets/Images/sprite_17.png");
-	test->AddImage("../Assets/Images/sprite_18.png");
-	test->AddImage("../Assets/Images/sprite_19.png");
-	test->AddImage("../Assets/Images/sprite_20.png");*/
-	//test->AddImage("../Assets/Images/sprite_21.png");
-	//test->AddImage("../Assets/Images/sprite_22.png");
-
-	//test2 = new Gif();
-	//test2->Init(platform);
-	//test2->SetPositionX(0);
-	//test2->SetPositionY(0);
-
-	//test2->AddImage("../Assets/Images/sprite_21.png");
-	//test2->AddImage("../Assets/Images/sprite_22.png");
+	background = new Image();
+	background->LoadImage("../Assets/Images/BackGround.png");
+	startButton = new Image();
+	startButton->LoadImage("../Assets/Images/Start.png");
+	startButton2 = new Image();
+	startButton2->LoadImage("../Assets/Images/Start2.png");
+	Gem1 = new Gem(0, 0, 0);
+	Gem2 = new Gem(1, 0, 0);
+	Gem3 = new Gem(2, 0, 0);
+	Gem4 = new Gem(3, 0, 0);
+	Gem5 = new Gem(4, 0, 0);
+	Gem6 = new Gem(5, 0, 0);
+	Gem7 = new Gem(6, 0, 0);
+	Gem1->state = Idling;
+	Gem2->state = Idling;
+	Gem3->state = Idling;
+	Gem4->state = Idling;
+	Gem5->state = Idling;
+	Gem6->state = Idling;
+	Gem7->state = Idling;
 }
 
 void Menu::Draw()
 {
+	y += .01f;
 	platform->RenderClear();
 	std::cout << " Menu Draw" << std::endl;
-	drawTiles();
+	//drawTiles();
 	text->Display(0, 0);
-	/*test->SetGifVel(3);
-	test->SetLoop(false);
-	test->Update();
+	platform->RenderImage(background, 0, 0, 0);
+	Gem1->Draw();
+	Gem2->Draw();
+	Gem3->Draw();
+	Gem4->Draw();
+	Gem5->Draw();
+	Gem6->Draw();
+	Gem7->Draw();
+	
+	platform->RenderImage(Gem1->_actualImage, (platform->width / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y*3), 0);
+	platform->RenderImage(Gem2->_actualImage, (platform->width*2 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 1), 0);
+	platform->RenderImage(Gem3->_actualImage, (platform->width*3 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 2), 0);
+	platform->RenderImage(Gem4->_actualImage, (platform->width*4 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 3), 0);
+	platform->RenderImage(Gem5->_actualImage, (platform->width*5 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 4), 0);
+	platform->RenderImage(Gem6->_actualImage, (platform->width*6 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 5), 0);
+	platform->RenderImage(Gem7->_actualImage, (platform->width*7 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf((y*3) + 6), 0);
 
-
-	test2->SetGifVel(45);
-	test2->SetLoop(true);
-
-	if (test->finish == true)
+	if (Ontop(*Gem1->_actualImage, (platform->width / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 1) && _leftclick)
 	{
-		test2->Update();
+		Gem1->state =  Destroying;
+	}
+
+	if (Ontop(*Gem2->_actualImage, (platform->width * 2 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 2) && _leftclick)
+	{
+		Gem2->state = Destroying;
+	}
+
+	if (Ontop(*Gem3->_actualImage, (platform->width * 3 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 3) && _leftclick)
+	{
+		Gem3->state =  Destroying;
+	}
+
+	if (Ontop(*Gem4->_actualImage, (platform->width * 4 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 4) && _leftclick)
+	{
+		Gem4->state =  Destroying;
+	}
+
+	if (Ontop(*Gem5->_actualImage, (platform->width * 5 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 5) && _leftclick)
+	{
+		Gem5->state =  Destroying;
+	}
+
+	if (Ontop(*Gem6->_actualImage, (platform->width * 6 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 6) && _leftclick)
+	{
+		Gem6->state =  Destroying;
+	}
+
+	if (Ontop(*Gem7->_actualImage, (platform->width*7 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 7) && _leftclick)
+	{
+		Gem7->state = Destroying;
+	}
+
+
+	/*if (Ontop(*Gem1->_actualImage, (platform->width / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 1) && _leftclick)
+	{
+		Gem1->state = Destroying;
+	}
+	if (Ontop(*Gem2->_actualImage, (platform->width * 2 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 2) && _leftclick)
+	{
+		Gem2->state = Destroying;
+	}
+	if (Ontop(*Gem3->_actualImage, (platform->width * 3 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 3) && _leftclick)
+	{
+		Gem3->state = Destroying;
+	}
+	if (Ontop(*Gem4->_actualImage, (platform->width * 4 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 4) && _leftclick)
+	{
+		Gem4->state = Destroying;
+	}
+	if (Ontop(*Gem5->_actualImage, (platform->width * 5 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 5) && _leftclick)
+	{
+		Gem5->state = Destroying;
+	}
+	if (Ontop(*Gem6->_actualImage, (platform->width * 6 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 6) && _leftclick)
+	{
+		Gem6->state = Destroying;
+	}
+	if (Ontop(*Gem7->_actualImage, (platform->width * 7 / 7) - (startButton->GetWidth() / 2), (platform->height / 5) - (startButton->GetHeight() / 2) * sinf(y * 3) + 7) && _leftclick)
+	{
+		Gem7->state = Destroying;
 	}*/
+
+
+	if (Ontop(*startButton, (platform->width / 4) - (startButton->GetWidth() / 2), (platform->height * 3 / 4) - (startButton->GetHeight() / 2)))
+	{
+		platform->RenderImage(startButton, (platform->width/4) - (startButton->GetWidth()/2), (platform->height*3/4) - (startButton->GetHeight() / 2), 0);
+	}
+	else
+	{
+		platform->RenderImage(startButton2, (platform->width / 4) - (startButton2->GetWidth() / 2), (platform->height * 3 / 4) - (startButton2->GetHeight() / 2), 0);
+	}
+	if (Ontop(*startButton, (platform->width / 4) - (startButton->GetWidth() / 2), (platform->height * 3 / 4) - (startButton->GetHeight() / 2)) && _leftclick)
+	{
+		manager->SetState(new Game());
+	}
 
 	platform->RenderPresent();
 }
 
-bool Menu::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps)
+bool Menu::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, float* mouseX, float* mouseY)
 {
 	std::cout << " Menu Input" << std::endl;
 
@@ -113,12 +179,23 @@ bool Menu::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps)
 		}
 	}
 
+	_mouseX = *mouseX;
+	_mouseY = *mouseY;
+	_leftclick = *leftclick;
+
 	return false;
 }
 
 void Menu::Update()
 {
 	std::cout << " Menu Update" << std::endl;
+	Gem1->Update();
+	Gem2->Update();
+	Gem3->Update();
+	Gem4->Update();
+	Gem5->Update();
+	Gem6->Update();
+	Gem7->Update();
 }
 
 void Menu::Close()
@@ -148,4 +225,16 @@ void Menu::drawTiles()
 			}
 		}
 	}
+}
+
+bool Menu::Ontop(Image image, float imageX, float imageY)
+{
+	if (_mouseX > imageX && _mouseX < imageX + image.GetWidth())
+	{
+		if (_mouseY > imageY&& _mouseY < imageY + image.GetHeight())
+		{
+			return true;
+		}
+	}
+	return false;
 }

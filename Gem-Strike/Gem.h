@@ -12,14 +12,14 @@ class Gem : GameObject
 {
 public:
 	Gem();
-	Gem(int type);
+	Gem(int type, int _x, int _y);
 	~Gem();
 	void Draw() override;
 	void Input(ListaT<int>* keyUps, ListaT<int>* keyDowns) override;
 	void Update() override;
 	float GetPositionX();
 	float GetPositionY();
-	
+	int x, y;
 	State state = Normal;
 	Image* _actualImage;
 private:
