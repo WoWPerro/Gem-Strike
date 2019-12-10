@@ -200,7 +200,7 @@ bool ListaS<T>::Search(T val)
 	try
 	{
 		// Devuelve true en la primera aparición del valor en algún nodo
-		NodoT<T>* it = first->next;
+		NodoT<T>* it = first;
 		while (it != NULL)
 		{
 			if ((it->value) == val)

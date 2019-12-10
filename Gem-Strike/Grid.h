@@ -7,9 +7,14 @@ class Grid
 public:
 	ListaT<Gem> ToDeletelist;
 	Grafo <Gem> grafoGem;
-private:
-	//NodoG<Gem>* gem00 = new NodoG<Gem>(Gem(0, 0, 0));
+	ListaT<ListaT<NodoG<Gem>*>*> listaGemas;
+	NodoG<Gem>* gem00 = new NodoG<Gem>(Gem(0, 0, 0), 0, 0);
 	void CreateGrid();
+	Image GetImage(int x, int y);
+	void UpdateGems(int x, int y);
+private:
+	void Conections();
+	//NodoG<Gem>* gem00 = new NodoG<Gem>(Gem(0, 0, 0));
 	//NodoG<Gem>* gem01 = new NodoG<Gem>(Gem(1));
 	//NodoG<Gem>* gem02 = new NodoG<Gem>(Gem(2));
 	//NodoG<Gem>* gem03 = new NodoG<Gem>(Gem(3));

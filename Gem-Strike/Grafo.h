@@ -18,7 +18,9 @@ public:
 	void printsons(NodoG<T>* padre, bool allvisited);
 	void Deletefromlist(T val, NodoG<T>* head);
 	NodoG<T>* searchSons(T data, NodoG<T>* padre);
-	NodoG<T>* GetNodo(int x, int y);
+	NodoG<T>* GetNodo(int x);
+	NodoG<T>* GetNodoAt(int x, int y);
+	void CreateGrid();
 	Grafo();
 	~Grafo();
 };
@@ -64,26 +66,7 @@ void Grafo<T>::insertaNodo(T data, NodoG<T>* padre)
 		std::cout << "Exception caught: " << e.what() << std::endl;
 	}
 
-	/*void Graph::insertNodes(int x, int y)
-	{
-		Vector<Vector<NodoG*>*> nodes;
-		for (int i = 0; i < x; i++)
-		{
-			nodes.PushBack(new Vector<NodoG*>(y));
-		}
-		for (int i = 0; i < x; i++)
-		{
-			for (int j = 0; j < y; j++)
-			{
-				nodes.GetAt(i)->PushAt(j, new NodoG(Vec2(i, j)));
-				if (i > 0)		connectNodes(nodes.GetAt(i - 1)->GetAt(j), nodes.GetAt(i)->GetAt(j));
-				if (i < x - 1)	connectNodes(nodes.GetAt(i + 1)->GetAt(j), nodes.GetAt(i)->GetAt(j));
-				if (j > 0)		connectNodes(nodes.GetAt(i)->GetAt(j - 1), nodes.GetAt(i)->GetAt(j));
-				if (j < y - 1)	connectNodes(nodes.GetAt(i)->GetAt(j + 1), nodes.GetAt(i)->GetAt(j));
-			}
-		}
-		root = nodes.GetAt(0)->GetAt(0);
-	}*/
+
 }
 
 /**
@@ -97,6 +80,10 @@ void Grafo<T>::insertaNodo(NodoG<T>* hijo, NodoG<T>* padre)
 {
 	try
 	{
+		if (first == nullptr)
+		{
+			first = padre;
+		}
 		if (padre->l.Search(hijo) == false && hijo->l.Search(padre) == false)
 		{
 			if (padre != NULL)
@@ -327,11 +314,96 @@ void Grafo<T>::printsons(NodoG<T>* padre, bool allvisited)
 }
 
 template <class T>
-NodoG<T>* Grafo<T>::GetNodo(int x, int y)
+NodoG<T>* Grafo<T>::GetNodo(int x)
 {
 	NodoG<T>* it = first;
 	for (int i = 0; i < x; i++)
 	{
-		it = it->l.first;
+		it = it->l.first->value;
 	}
+	return it;
+}
+
+template<class T>
+inline void Grafo<T>::CreateGrid()
+{
+	/*ListaT<ListaT<NodoG<T>*>*> nodos;*/
+	/*for (int i = 0; i < 8; i++)
+	{
+		nodos.push_back(new ListaT<NodoG<T>*>);
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			nodos.GetAt(i)->PushAt(j, new NodoG(Vec2(i, j)));
+			if (i > 0)		connectnodos(nodos.GetAt(i - 1)->GetAt(j), nodos.GetAt(i)->GetAt(j));
+			if (i < x - 1)	connectnodos(nodos.GetAt(i + 1)->GetAt(j), nodos.GetAt(i)->GetAt(j));
+			if (j > 0)		connectnodos(nodos.GetAt(i)->GetAt(j - 1), nodos.GetAt(i)->GetAt(j));
+			if (j < y - 1)	connectnodos(nodos.GetAt(i)->GetAt(j + 1), nodos.GetAt(i)->GetAt(j));
+		}
+	}
+	root = nodos.GetAt(0)->GetAt(0);*/
+}
+
+template<class T>
+NodoG<T>* Grafo<T>::GetNodoAt(int x, int y)
+{
+	int y2 = 0;
+	int x2 = 0;
+	NodoG<T>* it = first;
+	bool search2 = false;
+	while (search2 == false)
+	{
+		if (it->x == x)
+		{
+			search2 = true;
+		}
+		else if (it->l.first->value->x == x2 + 1)
+		{
+			it = it->l.first->value;
+		}
+		else if (it->l.first->next->value->x == x2 + 1)
+		{
+			it = it->l.first->next->value;
+		}
+		else if (it->l.first->next->next->value->x == x2 + 1)
+		{
+			it = it->l.first->next->next->value;
+		}
+		else if (it->l.first->next->next->next->value->x == x2 + 1)
+		{
+			it = it->l.first->next->next->next->value;
+		}
+		x2++;
+	}
+
+
+	bool search = false;
+	while (search == false)
+	{
+		if (it->y == y && it->x == x)
+		{
+			search = true;
+		}
+		else if (it->l.first->value->y == y2 + 1)
+		{
+			it = it->l.first->value;
+		}
+		else if (it->l.first->next->value->y == y2 + 1)
+		{
+			it = it->l.first->next->value;
+		}
+		else if (it->l.first->next->next->value->y == y2 + 1)
+		{
+			it = it->l.first->next->next->value;
+		}
+		else if (it->l.first->next->next->next->value->y == y2 + 1)
+		{
+			it = it->l.first->next->next->next->value;
+		}
+		y2++;
+	}
+	return it;
 }

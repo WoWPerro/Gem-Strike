@@ -2,6 +2,7 @@
 #include<iostream>
 #include "Gem.h"
 
+
 Game::Game()
 {
 
@@ -14,6 +15,7 @@ Game::~Game()
 
 void Game::Init(Platform* platform, GameStateManager* manager)
 {
+	Gemgrid.CreateGrid();
 	std::cout << " Game Init" << std::endl;
 	this->platform = platform;
 	this->manager = manager;
@@ -52,6 +54,7 @@ void Game::Draw()
 	DrawTiles();
 	gem1->Draw();
 	platform->RenderImage(gem1->_actualImage, 0, 0, 0);
+	DrawGems();
 	/*player->Draw();
 	enemy->Draw();*/
 
@@ -101,6 +104,7 @@ bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, fl
 
 void Game::Update()
 {
+	UpdateGems();
 	/*for (auto object : bulletPool)
 	{
 		object->Update();
@@ -146,5 +150,30 @@ void Game::DrawTiles()
 			}
 		}
 		switch1 = !switch1;
+	}
+}
+
+void Game::DrawGems()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			Image* image = &Gemgrid.GetImage(i, j);
+			int w = tile1->GetWidth();
+			int h = tile1->GetHeight();
+			platform->RenderImage(image, ((platform->width / 2) - 4 * w) + (i * w), ((platform->height / 2) - 4 * h) + (j * h), 0);
+		}
+	}
+}
+
+void Game::UpdateGems()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			Gemgrid.UpdateGems(i, j);
+		}
 	}
 }

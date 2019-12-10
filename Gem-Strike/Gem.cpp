@@ -316,7 +316,7 @@ void Gem::Update()
 	}
 	else if (state == Normal)
 	{
-
+		_actualImage = _image;
 	}
 }
 

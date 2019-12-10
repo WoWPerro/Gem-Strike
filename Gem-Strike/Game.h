@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "Gem.h"
+#include "Grid.h"
 
 class Game : public GameState
 {
@@ -10,7 +11,10 @@ private:
 	Image* tile1;
 	Image* tile2;
 	Gem* gem1;
+	Grid Gemgrid;
 	void DrawTiles();
+	void DrawGems();
+	void UpdateGems();
 	/*Tank* player;
 	HeavyTank* enemy;
 	Bullet* bullet;
