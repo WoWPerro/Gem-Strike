@@ -2,30 +2,25 @@
 #include "GameState.h"
 #include "Gem.h"
 #include "Grid.h"
+#include "Text.h"
 
 class Game : public GameState
 {
 private:
+	float _mouseX = 0;
+	float _mouseY = 0;
+	bool _leftclick = false;
 	Platform* platform;
 	GameStateManager* manager;
 	Image* tile1;
 	Image* tile2;
 	Gem* gem1;
 	Grid Gemgrid;
+	Text* Score;
+	std::string scoreString;
 	void DrawTiles();
 	void DrawGems();
 	void UpdateGems();
-	/*Tank* player;
-	HeavyTank* enemy;
-	Bullet* bullet;
-	Map* map;*/
-
-	/*std::list<GameObject*> bulletPool;
-	std::list<GameObject*> bulletPoolEnemy;
-	std::list<GameObject*> tilePool;
-	std::list<GameObject*> tankPool;
-	std::list<float*> tankPosX;
-	std::list<float*> tankPosY;*/
 
 public:
 	Game();
@@ -35,5 +30,7 @@ public:
 	bool Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, float* mouseX, float* mouseY) override;
 	void Update() override;
 	void Close() override;
+	bool Ontop(Image image, float imageX, float imageY);
+	std::string OntopOfGem();
 };
 

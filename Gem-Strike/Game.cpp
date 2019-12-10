@@ -25,25 +25,9 @@ void Game::Init(Platform* platform, GameStateManager* manager)
 	tile2 = new Image();
 	tile2->LoadImage("../Assets/Images/Tile2.png");
 	gem1 = new Gem(6, 0,0);
-	/*player = new Tank();
-	player->Init(platform);
-	player->SetPool(&bulletPool, &tilePool, &tankPosX, &tankPosY);
-	player->getPool(&bulletPoolEnemy);
-
-	enemy = new HeavyTank();
-	enemy->Init(platform);
-	enemy->SetPool(&bulletPoolEnemy, &tilePool, &tankPosX, &tankPosY);
-	enemy->getPool(&bulletPool);
-
-	bullet = new Bullet(100, 100, player->GetAngle(), 10, 1);
-	bullet->Init(platform);
-	bullet->SetPool(&tilePool);
-
-	map = new Map();
-	map->SetPool(&tilePool);
-	map->Init(platform);*/
-
 	this->platform = platform;
+	scoreString = "HOLA";
+	Score = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, scoreString, { 255, 0, 0, 255 });
 	std::cout << " Game Init" << std::endl;
 }
 
@@ -55,22 +39,7 @@ void Game::Draw()
 	gem1->Draw();
 	platform->RenderImage(gem1->_actualImage, 0, 0, 0);
 	DrawGems();
-	/*player->Draw();
-	enemy->Draw();*/
-
-	//A mayor numero menor velocidad del Gif
-
-	/*for (auto object : bulletPool)
-	{
-		object->Draw();
-	}
-
-	for (auto object : bulletPoolEnemy)
-	{
-		object->Draw();
-	}
-
-	map->Draw();*/
+	Score->Display(0, 0);
 	platform->RenderPresent();
 }
 
@@ -96,7 +65,9 @@ bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, fl
 		}
 	}
 
-	//player->Input(keyUps, keyDowns);
+	_mouseX = *mouseX;
+	_mouseY = *mouseY;
+	_leftclick = leftclick;
 
 	std::cout << " Game Input" << std::endl;
 	return false;
@@ -104,21 +75,13 @@ bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, fl
 
 void Game::Update()
 {
-	UpdateGems();
-	/*for (auto object : bulletPool)
+	if (_leftclick == true)
 	{
-		object->Update();
+		scoreString = "";
+		scoreString = OntopOfGem();
+		Score->Update(scoreString);
 	}
-
-	for (auto object : bulletPoolEnemy)
-	{
-		object->Update();
-	}*/
-
-	/*enemy->SetPositionsTank(player->GetPositionX() + player->GetRadius() / 2, player->GetPositionY() + player->GetRadius() / 2);
-	enemy->Update();
-	player->Update();*/
-
+	UpdateGems();
 	std::cout << " Game Update" << std::endl;
 
 }
@@ -176,4 +139,51 @@ void Game::UpdateGems()
 			Gemgrid.UpdateGems(i, j);
 		}
 	}
+}
+
+bool Game::Ontop(Image image, float imageX, float imageY)
+{
+	if (_mouseX > imageX&& _mouseX < imageX + image.GetWidth())
+	{
+		if (_mouseY > imageY&& _mouseY < imageY + image.GetHeight())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+std::string Game::OntopOfGem()
+{
+	int w = tile1->GetWidth();
+	int h = tile1->GetHeight();
+	int x = (platform->width / 2) - (4 * w);
+	int y = (platform->height / 2) - (4 * h);
+	int w2 = x + (w*8);
+	int h2 = x + (h*8);
+
+
+
+	if (_mouseX > x && _mouseX < x + w2)
+	{
+		if (_mouseY > y && _mouseY < y + h2)
+		{
+			for (int i = 0; i < 9; i++)
+			{
+				for (int j = 0; j < 9; j++)
+				{
+					if (_mouseX > x && _mouseX < x + w * i)
+					{
+						if (_mouseY > y && _mouseY < y + h * j)
+						{
+							std::string index = std::to_string(i - 1) + " " + std::to_string(j - 1);
+							return index;
+						}
+					}
+				}			
+			}
+		}
+	}
+
+	return "";
 }

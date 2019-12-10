@@ -4,23 +4,26 @@
 #include <exception>
 
 
-Text::Text(const std::string& font_path, int font_size, const std::string& message_text, const SDL_Color& color)
+Text::Text(const std::string& font_path, int font_size, std::string message_text, const SDL_Color& color)
 {
 	TTF_Init();
 	//printf("TTF_OpenFont: %s\n", TTF_GetError());
-
-	_text_texture = LoadFont(font_path, font_size, message_text, color);
+	message = message_text;
+	_font_path = font_path;
+	_font_size = font_size;
+	_color = color;
+	_text_texture = LoadFont(font_path, font_size, message, color);
 	SDL_QueryTexture(_text_texture, nullptr, nullptr, &_text_rect.w, &_text_rect.h);
 }
 
-void Text::Display(int x, int y) const
+void Text::Display(int x, int y)
 {
 	_text_rect.x = x;
 	_text_rect.y = y;
 	SDL_RenderCopy(Platform::renderer, _text_texture, nullptr, &_text_rect);
 }
 
-SDL_Texture* Text::LoadFont(const std::string& font_path, int font_size, const std::string& message_text, const SDL_Color& color)
+SDL_Texture* Text::LoadFont(const std::string& font_path, int font_size, std::string message_text, const SDL_Color& color)
 {
 	TTF_Font* font = NULL;
 	try
@@ -53,6 +56,12 @@ SDL_Texture* Text::LoadFont(const std::string& font_path, int font_size, const s
 	return text_texture;
 }
 
+void Text::Update(std::string message_text)
+{
+	message = message_text;
+	_text_texture = LoadFont(_font_path, _font_size, message, _color);
+	SDL_QueryTexture(_text_texture, nullptr, nullptr, &_text_rect.w, &_text_rect.h);
+}
 
 Text::~Text()
 {

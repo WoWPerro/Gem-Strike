@@ -8,20 +8,19 @@
 class Text
 {
 public:
-	Text(const std::string& font_path, int font_size, const std::string& message_text, const SDL_Color& color);
+	Text(const std::string& font_path, int font_size, std::string message_text, const SDL_Color& color);
 
-	void Display(int x, int y) const;
+	void Display(int x, int y);
 
-	static SDL_Texture* LoadFont(const std::string& font_path, int font_size, const std::string& message_text, const SDL_Color& color);
-
-	/*void renderText(const std::string &message, const std::string &fontFile);
-	SDL_Texture * renderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer);
-	void renderTexture(KImage *tex, int x, int y);
-	void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst);*/
-
+	static SDL_Texture* LoadFont(const std::string& font_path, int font_size, std::string message_text, const SDL_Color& color);
+	void Update(std::string message_text);
 	~Text();
 
 private:
 	SDL_Texture* _text_texture = nullptr;
 	mutable SDL_Rect _text_rect;
+	std::string message;
+	std::string _font_path;
+	int _font_size;
+	SDL_Color _color;
 };

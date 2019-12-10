@@ -18,7 +18,7 @@ void Menu::Init(Platform* platform, GameStateManager* manager)
 	this->platform = platform;
 	this->manager = manager;
 
-	text = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, "Ya tengo texto en mi jueguitow", { 255, 0, 0, 255 });
+	//text = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, "Ya tengo texto en mi jueguitow", { 255, 0, 0, 255 });
 	tile1 = new Image();
 	tile1->LoadImage("../Assets/Images/Tile.png");
 	tile2 = new Image();
@@ -51,7 +51,7 @@ void Menu::Draw()
 	platform->RenderClear();
 	std::cout << " Menu Draw" << std::endl;
 	//drawTiles();
-	text->Display(0, 0);
+	//text->Display(0, 0);
 	platform->RenderImage(background, 0, 0, 0);
 	Gem1->Draw();
 	Gem2->Draw();
