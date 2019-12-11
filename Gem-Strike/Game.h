@@ -17,11 +17,19 @@ private:
 	Gem* gem1;
 	Grid Gemgrid;
 	Text* Score;
-	std::string scoreString;
+	std::string GemClickPosition;
 	void DrawTiles();
 	void DrawGems();
 	void UpdateGems();
-
+	int offsetx = 0;
+	int offsety = 0;
+	bool transitionFinish = false;
+	bool select1 = false;
+	bool select2 = false;
+	int selectedgem1i = 0;
+	int selectedgem1j = 0;
+	int selectedgem2i = 0;
+	int selectedgem2j = 0;
 public:
 	Game();
 	~Game();
@@ -32,5 +40,6 @@ public:
 	void Close() override;
 	bool Ontop(Image image, float imageX, float imageY);
 	std::string OntopOfGem();
+	void DrawTransition(int i1, int j1, int i2, int j2, int type);
 };
 

@@ -19,12 +19,14 @@ public:
 	void Update() override;
 	float GetPositionX();
 	float GetPositionY();
+	void ChangeType(int type);
 	int x, y;
 	State state = Normal;
 	Image* _actualImage;
+	int _type;
+	bool visited = false;
 private:
 	void LoadGifs(int type);
-	int _type;
 	//float _positionX, _positionY;
 	Image* _image;
 	Gif* _Destruction;

@@ -1,7 +1,31 @@
 #include "Game.h"
 #include<iostream>
 #include "Gem.h"
+#include <sstream> 
 
+ListaT<int> extractIntegerWords(std::string str)
+{
+	ListaT<int> Results;
+	std::stringstream ss;
+
+	/* Storing the whole string into string stream */
+	ss << str;
+
+	/* Running loop till the end of the stream */
+	std::string temp;
+	int found;
+	while (!ss.eof())
+	{
+
+		/* extracting word by word from stream */
+		ss >> temp;
+
+		/* Checking the given word is integer or not */
+		if (std::stringstream(temp) >> found)
+			Results.push_back(found);
+	}
+	return Results;
+}
 
 Game::Game()
 {
@@ -26,8 +50,8 @@ void Game::Init(Platform* platform, GameStateManager* manager)
 	tile2->LoadImage("../Assets/Images/Tile2.png");
 	gem1 = new Gem(6, 0,0);
 	this->platform = platform;
-	scoreString = "HOLA";
-	Score = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, scoreString, { 255, 0, 0, 255 });
+	GemClickPosition = "HOLA";
+	Score = new Text("../Assets/Fonts/8-BIT WONDER.TTF", 25, GemClickPosition, { 255, 0, 0, 255 });
 	std::cout << " Game Init" << std::endl;
 }
 
@@ -38,8 +62,101 @@ void Game::Draw()
 	DrawTiles();
 	gem1->Draw();
 	platform->RenderImage(gem1->_actualImage, 0, 0, 0);
-	DrawGems();
-	Score->Display(0, 0);
+	if (select1 && select2)
+	{
+		int typeT = 0;
+		if (selectedgem1i == selectedgem2i)
+		{
+			typeT = 1;
+			if (selectedgem1j < selectedgem2j)
+			{
+				if (transitionFinish == false)
+				{
+					DrawTransition(selectedgem1i, selectedgem1j, selectedgem2i, selectedgem2j, typeT);
+					if (transitionFinish)
+					{
+						select1 = false;
+						select2 = false;
+						int temp = Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->_type;
+						int temp2 = Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->_type;
+						Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->ChangeType(temp2);
+						Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->ChangeType(temp);
+						transitionFinish = false;
+						offsety = 0;
+						offsetx = 0;
+					}
+				}
+			}
+			else
+			{
+				if (transitionFinish == false)
+				{
+					DrawTransition(selectedgem2i, selectedgem2j, selectedgem1i, selectedgem1j, typeT);
+					if (transitionFinish)
+					{
+						select1 = false;
+						select2 = false;
+						int temp = Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->_type;
+						int temp2 = Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->_type;
+						Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->ChangeType(temp2);
+						Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->ChangeType(temp);
+						transitionFinish = false;
+						offsety = 0;
+						offsetx = 0;
+					}
+				}
+			}
+		}
+		else if (selectedgem1j == selectedgem2j)
+		{
+			typeT = 2;
+			if (selectedgem1i < selectedgem2i)
+			{
+				if (transitionFinish == false)
+				{
+					DrawTransition(selectedgem1i, selectedgem1j, selectedgem2i, selectedgem2j, typeT);
+					if (transitionFinish)
+					{
+						select1 = false;
+						select2 = false;
+						int temp = Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->_type;
+						int temp2 = Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->_type;
+						Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->ChangeType(temp2);
+						Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->ChangeType(temp);
+						transitionFinish = false;
+						offsety = 0;
+						offsetx = 0;
+					}
+				}
+			}
+			else
+			{
+				if (transitionFinish == false)
+				{
+					DrawTransition(selectedgem2i, selectedgem2j, selectedgem1i, selectedgem1j, typeT);
+					if (transitionFinish)
+					{
+						select1 = false;
+						select2 = false;
+						int temp = Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->_type;
+						int temp2 = Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->_type;
+						Gemgrid.GetGemAt(selectedgem2i, selectedgem2j)->ChangeType(temp2);
+						Gemgrid.GetGemAt(selectedgem1i, selectedgem1j)->ChangeType(temp);
+						transitionFinish = false;
+						offsety = 0;
+						offsetx = 0;
+					}
+				}
+			}
+		}
+
+		
+	}
+	else
+	{
+		DrawGems();
+	}
+	//Score->Display(0, 0);
 	platform->RenderPresent();
 }
 
@@ -67,7 +184,7 @@ bool Game::Input(ListaT<int>* keyDowns, ListaT<int>* keyUps, bool* leftclick, fl
 
 	_mouseX = *mouseX;
 	_mouseY = *mouseY;
-	_leftclick = leftclick;
+	_leftclick = *leftclick;
 
 	std::cout << " Game Input" << std::endl;
 	return false;
@@ -77,9 +194,24 @@ void Game::Update()
 {
 	if (_leftclick == true)
 	{
-		scoreString = "";
-		scoreString = OntopOfGem();
-		Score->Update(scoreString);
+		GemClickPosition = "";
+		GemClickPosition = OntopOfGem();
+		//Score->Update(GemClickPosition);
+		Gemgrid.GetGemAt(extractIntegerWords(GemClickPosition).get_at(0)->value, extractIntegerWords(GemClickPosition).get_at(1)->value)->state = Idling;
+		if (select1 == false)
+		{
+			selectedgem1i = extractIntegerWords(GemClickPosition).get_at(0)->value;
+			selectedgem1j = extractIntegerWords(GemClickPosition).get_at(1)->value;
+			Gemgrid.GetGemAt(extractIntegerWords(GemClickPosition).get_at(0)->value, extractIntegerWords(GemClickPosition).get_at(1)->value)->state = Idling;
+			select1 = true;
+		}
+		else if (select2 == false)
+		{
+			selectedgem2i = extractIntegerWords(GemClickPosition).get_at(0)->value;
+			selectedgem2j = extractIntegerWords(GemClickPosition).get_at(1)->value;
+			Gemgrid.GetGemAt(extractIntegerWords(GemClickPosition).get_at(0)->value, extractIntegerWords(GemClickPosition).get_at(1)->value)->state = Idling;
+			select2 = true;
+		}
 	}
 	UpdateGems();
 	std::cout << " Game Update" << std::endl;
@@ -186,4 +318,69 @@ std::string Game::OntopOfGem()
 	}
 
 	return "";
+}
+
+void Game::DrawTransition(int i1, int j1, int i2, int j2, int type)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			int w = tile1->GetWidth();
+			int h = tile1->GetHeight();
+			
+			if (i == i1 && j == j1)
+			{
+				Image* image = &Gemgrid.GetImage(i, j);
+				int xPos = (((platform->width / 2) - 4 * w) + (i * w)) + offsetx;
+				int yPos = (((platform->height / 2) - 4 * h) + (j * h)) + offsety;
+				platform->RenderImage(image, xPos, yPos, 0);
+				if (type == 2)
+				{
+					offsetx++;
+					if (offsetx >= image->GetWidth())
+					{
+						transitionFinish = true;
+					}
+				}
+				else if (type == 1)
+				{
+					offsety++;
+					if (offsety >= image->GetHeight())
+					{
+					transitionFinish = true;
+					}
+				}
+			}
+			else if (i == i2 && j == j2)
+			{
+				Image* image = &Gemgrid.GetImage(i, j);
+				int xPos = (((platform->width / 2) - 4 * w) + (i * w)) - offsetx;
+				int yPos = (((platform->height / 2) - 4 * h) + (j * h)) - offsety;
+				platform->RenderImage(image, xPos, yPos, 0);
+				if (type == 2)
+				{
+					offsetx++;
+					if (offsetx >= image->GetWidth())
+					{
+						transitionFinish = true;
+					}
+				}
+				else if (type == 1)
+				{
+					offsety++;
+					if (offsety >= image->GetHeight())
+					{
+						transitionFinish = true;
+					}
+				}
+			}
+			else
+			{	
+				Image* image = &Gemgrid.GetImage(i, j);
+				platform->RenderImage(image, ((platform->width / 2) - 4 * w) + (i * w), ((platform->height / 2) - 4 * h) + (j * h), 0);
+			}
+			
+		}
+	}
 }

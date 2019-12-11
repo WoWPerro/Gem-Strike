@@ -145,6 +145,7 @@ void Menu::Draw()
 	}
 	if (Ontop(*startButton, (platform->width / 4) - (startButton->GetWidth() / 2), (platform->height * 3 / 4) - (startButton->GetHeight() / 2)) && _leftclick)
 	{
+		//manager->RealaseState();
 		manager->SetState(new Game());
 	}
 

@@ -12,7 +12,7 @@ void Gem::LoadGifs(int type)
 	switch (type)
 	{
 	case 0:
-	{
+	{		
 		_image = new Image();
 		_image->LoadImage("../Assets/Gifs/Diamond/Diamond.png");
 		_Destruction->AddImage("../Assets/Gifs/Diamond/Diamond.png");
@@ -328,4 +328,15 @@ float Gem::GetPositionX()
 float Gem::GetPositionY()
 {
 	return 0;
+}
+
+void Gem::ChangeType(int type)
+{
+	_type = type;
+	delete _Destruction;
+	_Destruction = new Gif(false);
+	delete _Idle;
+	_Idle = new Gif(true);
+	delete _image;
+	LoadGifs(_type);
 }

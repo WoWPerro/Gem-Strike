@@ -73,3 +73,35 @@ void Grid::UpdateGems(int x, int y)
 	grafoGem.GetNodoAt(x, y)->nodoData.Update();
 	grafoGem.GetNodoAt(x, y)->nodoData.Draw();
 }
+
+Gem* Grid::GetGemAt(int x, int y)
+{
+	return &grafoGem.GetNodoAt(x, y)->nodoData;
+}
+
+void Grid::CheckExplotions()
+{
+	Check(0, 0);
+}
+
+void Grid::Check(int i, int j)
+{
+	Gem *gem = GetGemAt(i, j);
+	gem->visited = true;
+	if (gem->_type == GetGemAt(i + 1, j)->_type && gem->visited == false)
+	{
+		ToDeletelist.push_back(GetGemAt(i + 1, j));
+	}
+	if (gem->_type == GetGemAt(i - 1, j)->_type && gem->visited == false)
+	{
+		ToDeletelist.push_back(GetGemAt(i - 1, j));
+	}
+	if (gem->_type == GetGemAt(i, j + 1)->_type && gem->visited == false)
+	{
+		ToDeletelist.push_back(GetGemAt(i, j + 1));
+	}
+	if (gem->_type == GetGemAt(i, j - 1)->_type && gem->visited == false)
+	{
+		ToDeletelist.push_back(GetGemAt(i, j - 1));
+	}
+}
